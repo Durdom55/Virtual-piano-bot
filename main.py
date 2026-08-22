@@ -1,5 +1,6 @@
 #---Imports---
 from customtkinter import *
+import tkinter as ttk
 
 
 #---AppGui---
@@ -12,6 +13,11 @@ class App:
         self.app.geometry('600x500')
         self.app.attributes('-topmost', True)
         self.app.resizable(False, False)
+        
+        # #---MainContainer---
+        # self.maincontainer = CTkFrame(master=self.app, fg_color="red")
+        # self.maincontainer.pack(fill=BOTH, expand=True)
+        
         #---TextContainer---
         self.textcontainer = CTkFrame(master=self.app, height=340)
         self.textcontainer.pack(fill=BOTH, side=BOTTOM, padx=20, pady=10)
@@ -20,17 +26,30 @@ class App:
         self.musicfield.pack(side=BOTTOM, fill=BOTH)
         
         #---ButtonsContainer---
-        self.buttoncontrainer = CTkFrame(master=self.app, height=160)
+        self.buttoncontrainer = CTkFrame(master=self.app, height=160, fg_color="transparent")
         self.buttoncontrainer.pack(fill=BOTH, side=TOP)
         
+        self.SpeedText = CTkLabel(self.buttoncontrainer, text='Speed: 1x', fg_color="transparent", font=("Consolas", 19, 'bold'))
+        self.SpeedText.pack(side=TOP, padx=(350, 0), pady=(10, 0))
+        
+        # self.savechang = CTkOptionMenu(self.buttoncontrainer, values=["megolav", 'tripitopi'])
+        # self.savechang.pack(anchor=NW, pady=(0,45), padx=(0, 10))
+        
+        self.SpeedSlider = CTkSlider(self.buttoncontrainer, number_of_steps=6, width=140)
+        self.SpeedSlider.pack(side=TOP, padx=(350, 0), pady=(10, 0))
+        
         self.butStart = CTkButton(self.buttoncontrainer, text="▶ START", font=("Segoe UI", 15, "bold"), height=45, width=160, corner_radius=7)
-        self.butStart.pack(side=LEFT, pady=(110, 0), padx=25)
+        self.butStart.pack(side=LEFT, pady=(45, 0), padx=(25, 0))
         
         self.butStop = CTkButton(self.buttoncontrainer, text="⏹ STOP", font=("Segoe UI", 15, "bold"), height=45, width=160, corner_radius=7)
-        self.butStop.pack(side=LEFT, pady=(110, 0), padx=0)
+        self.butStop.pack(side=LEFT, pady=(45, 0), padx=(10, 0))
+        
+        self.butChange = CTkButton(self.buttoncontrainer, text="Change HotKey", font=("Segoe UI", 15, "bold"), height=45, width=160, corner_radius=7)
+        self.butChange.pack(side=LEFT, pady=(45, 0), padx=(60, 0))
+        
         
         #---ProgressBarContainer---
-        self.progbarcont = CTkFrame(master=self.app, height=13)
+        self.progbarcont = CTkFrame(master=self.app, height=13, fg_color="transparent")
         self.progbarcont.pack(fill=BOTH, side=BOTTOM)
         
         self.progbar = CTkProgressBar(self.progbarcont, height=13)
