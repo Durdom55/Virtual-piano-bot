@@ -17,9 +17,15 @@ class App:
         #---TextContainer---
         self.textcontainer = CTkFrame(master=self.app, height=340, fg_color="transparent")
         self.textcontainer.pack(fill=BOTH, side=BOTTOM, padx=20, pady=10)
+        
+        def select_all(event):
+            self.musicfield.tag_add('sel', '1.0', 'end-1c')
+            return 'break'
     
         self.musicfield = CTkTextbox(self.textcontainer, width=200, height=300, font=("Consolas", 20, 'bold'), undo=True, maxundo=15)
         self.musicfield.pack(side=BOTTOM, fill=BOTH)
+        
+        self.musicfield.bind('<Control-a>', select_all)
         
         #---ButtonsContainer---
         self.buttoncontrainer = CTkFrame(master=self.app, height=160, fg_color="transparent")
