@@ -1,7 +1,6 @@
 #---Imports---
 from customtkinter import *
-import tkinter as ttk
-
+from bot import *
 
 #---AppGui---
 class App:
@@ -14,12 +13,8 @@ class App:
         self.app.attributes('-topmost', True)
         self.app.resizable(False, False)
         
-        # #---MainContainer---
-        # self.maincontainer = CTkFrame(master=self.app, fg_color="red")
-        # self.maincontainer.pack(fill=BOTH, expand=True)
-        
         #---TextContainer---
-        self.textcontainer = CTkFrame(master=self.app, height=340)
+        self.textcontainer = CTkFrame(master=self.app, height=340, fg_color="transparent")
         self.textcontainer.pack(fill=BOTH, side=BOTTOM, padx=20, pady=10)
     
         self.musicfield = CTkTextbox(self.textcontainer, width=200, height=300, font=("Consolas", 20, 'bold'), undo=True, maxundo=15)
@@ -29,7 +24,7 @@ class App:
         self.buttoncontrainer = CTkFrame(master=self.app, height=160, fg_color="transparent")
         self.buttoncontrainer.pack(fill=BOTH, side=TOP)
         
-        self.SpeedText = CTkLabel(self.buttoncontrainer, text='Speed: 1x', fg_color="transparent", font=("Consolas", 19, 'bold'))
+        self.SpeedText = CTkLabel(self.buttoncontrainer, text=f'Speed: {Speed}x', fg_color="transparent", font=("Consolas", 19, 'bold'))
         self.SpeedText.pack(side=TOP, padx=(350, 0), pady=(10, 0))
         
         # self.savechang = CTkOptionMenu(self.buttoncontrainer, values=["megolav", 'tripitopi'])
@@ -38,10 +33,14 @@ class App:
         self.SpeedSlider = CTkSlider(self.buttoncontrainer, number_of_steps=6, width=140)
         self.SpeedSlider.pack(side=TOP, padx=(350, 0), pady=(10, 0))
         
-        self.butStart = CTkButton(self.buttoncontrainer, text="▶ START", font=("Segoe UI", 15, "bold"), height=45, width=160, corner_radius=7)
+        self.butStart = CTkButton(self.buttoncontrainer,
+                                  text="▶ START",
+                                  font=("Segoe UI", 15, "bold"),
+                                  height=45, width=160, corner_radius=7,
+                                  command=lambda: Start(self.app, self.butStart, self.butStop, self.musicfield))
         self.butStart.pack(side=LEFT, pady=(45, 0), padx=(25, 0))
         
-        self.butStop = CTkButton(self.buttoncontrainer, text="⏹ STOP", font=("Segoe UI", 15, "bold"), height=45, width=160, corner_radius=7)
+        self.butStop = CTkButton(self.buttoncontrainer, text="⏹ STOP", font=("Segoe UI", 15, "bold"), height=45, width=160, corner_radius=7, state=DISABLED)
         self.butStop.pack(side=LEFT, pady=(45, 0), padx=(10, 0))
         
         self.butChange = CTkButton(self.buttoncontrainer, text="Change HotKey", font=("Segoe UI", 15, "bold"), height=45, width=160, corner_radius=7)
