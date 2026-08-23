@@ -29,9 +29,28 @@ class App:
         
         # self.savechang = CTkOptionMenu(self.buttoncontrainer, values=["megolav", 'tripitopi'])
         # self.savechang.pack(anchor=NW, pady=(0,45), padx=(0, 10))
+        def on_slider_release(event):
+            global Speed
+            val = round(self.SpeedSlider.get(), 2)
+            Speed=val
+            match val:
+                case 0.83:
+                    Speed=0.75
+                case 0.54:
+                    Speed=0.5
+                case 1.71:
+                    Speed=1.75
+                case 1.12:
+                    Speed=1   
+                case 1.42:
+                    Speed=1.25
+            self.SpeedText.configure(text=f'Speed: {Speed}x')     
         
-        self.SpeedSlider = CTkSlider(self.buttoncontrainer, number_of_steps=6, width=140)
+        self.SpeedSlider = CTkSlider(self.buttoncontrainer,
+                                     number_of_steps=6, width=140,
+                                     from_=0.25, to=2)
         self.SpeedSlider.pack(side=TOP, padx=(350, 0), pady=(10, 0))
+        self.SpeedSlider.bind('<ButtonRelease-1>', on_slider_release)
         
         self.butStart = CTkButton(self.buttoncontrainer,
                                   text="▶ START",
@@ -63,6 +82,7 @@ class App:
 
 
         self.app.mainloop()
+        
 
 
 #--------------run--------------
