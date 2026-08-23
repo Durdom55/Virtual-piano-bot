@@ -42,11 +42,11 @@ def BotPlay(text, pb):
                     case '}':
                         Sleeptime=Sleep
                     case '-':
-                        time.sleep(0.5)
+                        time.sleep(0.5/Speed)
                     case '—':
-                        time.sleep(0.6)
+                        time.sleep(0.6/Speed)
                     case '–':
-                        time.sleep(0.55)
+                        time.sleep(0.55/Speed)
             else:
                 if cacheOn==True:
                     cache+=i
