@@ -3,7 +3,7 @@ import keyboard
 import threading
 import time
 from tkinter.messagebox import showwarning
-from config import *
+import config
 
 #---Var---
 cache = ''
@@ -11,16 +11,16 @@ cacheOn = False
 
 #---Func---
 def BotPlay(text, pb):
-    global cacheOn, Sleep, cache, IsRun
+    global cacheOn, Sleep, cache
     text = text.get('0.0', 'end')
     numofsteps = len(text)
     progVal = 1/numofsteps
     stepVal = 0
-    Sleeptime=Sleep
+    Sleeptime=config.Sleep
     print('text get')
-    if IsRun==True:
+    if config.IsRun==True:
         for i in text:
-            if not IsRun:
+            if not config.IsRun:
                 break
             print(i)
             stepVal+=progVal
@@ -28,7 +28,7 @@ def BotPlay(text, pb):
             if i in [' ', '[', ']', '{', '}', '-', '—', '–']:
                 match i:
                     case ' ':
-                        time.sleep(Sleeptime/Speed)
+                        time.sleep(Sleeptime/config.Speed)
                     case '[':
                         cacheOn=True
                     case ']':
@@ -36,17 +36,17 @@ def BotPlay(text, pb):
                         print(cache)
                         cash_press(cache)
                         cache=''
-                        time.sleep(Sleeptime/Speed)
+                        time.sleep(Sleeptime/config.Speed)
                     case '{':
                         Sleeptime-=0.15
                     case '}':
                         Sleeptime=Sleep
                     case '-':
-                        time.sleep((Sleeptime+1)/Speed)
+                        time.sleep((Sleeptime+0.05)/config.Speed)
                     case '—':
-                        time.sleep((Sleeptime+1.5)/Speed)
+                        time.sleep((Sleeptime+0.07)/config.Speed)
                     case '–':
-                        time.sleep((Sleeptime+0.12)/Speed)
+                        time.sleep((Sleeptime+0.053)/config.Speed)
             else:
                 if cacheOn==True:
                     cache+=i
@@ -55,8 +55,9 @@ def BotPlay(text, pb):
                         keyboard.send(f'shift+{i.lower()}')
                     else:      
                         keyboard.send(i)
-                    time.sleep(Sleeptime/Speed)
-    IsRun = False
+                    time.sleep(Sleeptime/config.Speed)
+            print(config.Speed)
+    config.IsRun = False
     
 def cash_press(cache):
     for i in cache:
@@ -66,11 +67,10 @@ def cash_press(cache):
             keyboard.send(i)
 
 def Wait(app, buts, butp, text, pb):
-    global IsRun
-    if HotBut!='':
-        if keyboard.is_pressed(HotBut) and NotRecord:
+    if config.HotBut!='':
+        if keyboard.is_pressed(config.HotBut) and config.NotRecord:
             print("nazhata")
-            if IsRun == False:
+            if config.IsRun == False:
                 print("Startw")
                 StartBut(buts, text, pb)
             else:
@@ -83,7 +83,7 @@ def Wait(app, buts, butp, text, pb):
     
 def Start(app, buts, butp, text, pb):
     buts.configure(state='disabled')
-    buts.configure(text=f'Press {HotBut} to playing')
+    buts.configure(text=f'Press {config.HotBut} to playing')
     butp.configure(state='normal')
     Wait(app, buts, butp, text, pb)
     
@@ -93,22 +93,21 @@ def Stop(buts, butp):
     butp.configure(state='disabled')
                 
 def StopBut(buts, butp):
-    global IsRun, cacheOn, cache, Sleep
+    global cacheOn, cache, Sleep
     cache = ''
     cacheOn = False
     Sleep=0.417
     print("Stop")
-    buts.configure(text=f'Press {HotBut} to playing')
-    IsRun=False
-    while keyboard.is_pressed(HotBut):
+    buts.configure(text=f'Press {config.HotBut} to playing')
+    config.IsRun=False
+    while keyboard.is_pressed(config.HotBut):
         time.sleep(0.01)
     
 def StartBut(buts, text, pb):
-    global IsRun
     print("Start")
     pb.set(0)
-    IsRun=True
-    buts.configure(text=f'Press {HotBut} to stop')
-    while keyboard.is_pressed(HotBut):
+    config.IsRun=True
+    buts.configure(text=f'Press {config.HotBut} to stop')
+    while keyboard.is_pressed(config.HotBut):
         time.sleep(0.01)
     threading.Thread(target=BotPlay, args=(text,pb, ), daemon=True).start()

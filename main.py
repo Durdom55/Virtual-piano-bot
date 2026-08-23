@@ -1,6 +1,7 @@
 #---Imports---
 from customtkinter import *
 from bot import *
+import config
 
 #---AppGui---
 class App:
@@ -24,27 +25,26 @@ class App:
         self.buttoncontrainer = CTkFrame(master=self.app, height=160, fg_color="transparent")
         self.buttoncontrainer.pack(fill=BOTH, side=TOP)
         
-        self.SpeedText = CTkLabel(self.buttoncontrainer, text=f'Speed: {Speed}x', fg_color="transparent", font=("Consolas", 19, 'bold'))
+        self.SpeedText = CTkLabel(self.buttoncontrainer, text=f'Speed: {config.Speed}x', fg_color="transparent", font=("Consolas", 19, 'bold'))
         self.SpeedText.pack(side=TOP, padx=(350, 0), pady=(10, 0))
         
         # self.savechang = CTkOptionMenu(self.buttoncontrainer, values=["megolav", 'tripitopi'])
         # self.savechang.pack(anchor=NW, pady=(0,45), padx=(0, 10))
         def on_slider_release(event):
-            global Speed
             val = round(self.SpeedSlider.get(), 2)
-            Speed=val
+            config.Speed=val
             match val:
                 case 0.83:
-                    Speed=0.75
+                    config.Speed=0.75
                 case 0.54:
-                    Speed=0.5
+                    config.Speed=0.5
                 case 1.71:
-                    Speed=1.75
+                    config.Speed=1.75
                 case 1.12:
-                    Speed=1   
+                    config.Speed=1   
                 case 1.42:
-                    Speed=1.25
-            self.SpeedText.configure(text=f'Speed: {Speed}x')     
+                    config.Speed=1.25
+            self.SpeedText.configure(text=f'Speed: {config.Speed}x')     
         
         self.SpeedSlider = CTkSlider(self.buttoncontrainer,
                                      number_of_steps=6, width=140,
