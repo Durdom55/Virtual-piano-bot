@@ -17,6 +17,8 @@ def BotPlay(text):
     print('text get')
     if IsRun==True:
         for i in text:
+            if not IsRun:
+                break
             print(i)
             if i in [' ', '[', ']', '{', '}', '-', '—', '–']:
                 match i:
@@ -49,6 +51,7 @@ def BotPlay(text):
                     else:      
                         keyboard.send(i)
                     time.sleep(Sleep/Speed)
+    IsRun = False
     
 def cash_press(cache):
     for i in cache:
@@ -61,9 +64,12 @@ def Wait(app, buts, butp, text):
     global IsRun
     if HotBut!='':
         if keyboard.is_pressed(HotBut) and NotRecord:
+            print("nazhata")
             if IsRun == False:
+                print("Startw")
                 StartBut(buts, butp, text)
             else:
+                print('StopW')
                 StopBut(buts, butp)
     else:
         showwarning(title='Warning', message='Set HotKey for proper operation')
@@ -73,8 +79,12 @@ def Wait(app, buts, butp, text):
 def Start(app, buts, butp, text):
     buts.configure(state='disabled')
     buts.configure(text=f'Press {HotBut} to playing')
-    butp.configure(state='enabled')
+    butp.configure(state='normal')
     Wait(app, buts, butp, text)
+    
+def Stop(buts, butp):
+    buts.configure(state='normal')
+    butp.configure(state='disabled')
                 
 def StopBut(buts, butp):
     global IsRun, cacheOn, cache, Sleep
@@ -82,9 +92,8 @@ def StopBut(buts, butp):
     cacheOn = False
     Sleep=0.417
     print("Stop")
+    buts.configure(text=f'Press {HotBut} to playing')
     IsRun=False
-    buts.configure(state='enabled')
-    butp.configure(state='disabled')
     while keyboard.is_pressed(HotBut):
         time.sleep(0.01)
     
@@ -92,6 +101,7 @@ def StartBut(buts, butp, text):
     global IsRun
     print("Start")
     IsRun=True
+    buts.configure(text=f'Press {HotBut} to stop')
     while keyboard.is_pressed(HotBut):
         time.sleep(0.01)
-    threading.Thread(target=BotPlay(text), daemon=True).start()
+    threading.Thread(target=BotPlay, args=(text,), daemon=True).start()
