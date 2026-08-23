@@ -42,11 +42,11 @@ def BotPlay(text, pb):
                     case '}':
                         Sleeptime=Sleep
                     case '-':
-                        time.sleep((Sleeptime+0.03)/config.Speed)
+                        time.sleep((Sleeptime+0.04)/config.Speed)
                     case '—':
                         time.sleep((Sleeptime+0.05)/config.Speed)
                     case '–':
-                        time.sleep((Sleeptime+0.032)/config.Speed)
+                        time.sleep((Sleeptime+0.043)/config.Speed)
             else:
                 if cacheOn==True:
                     cache+=i
@@ -56,7 +56,6 @@ def BotPlay(text, pb):
                     else:      
                         keyboard.send(i)
                     time.sleep(Sleeptime/config.Speed)
-            print(config.Speed)
     config.IsRun = False
     
 def cash_press(cache):

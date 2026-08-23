@@ -2,4 +2,4 @@ HotBut="F4"
 NotRecord=True
 IsRun=False
 Speed=1
-Sleep=0.25
+Sleep=0.17
