@@ -37,10 +37,16 @@ class App:
                                   text="▶ START",
                                   font=("Segoe UI", 15, "bold"),
                                   height=45, width=160, corner_radius=7,
-                                  command=lambda: Start(self.app, self.butStart, self.butStop, self.musicfield))
+                                  command=lambda: Start(self.app, self.butStart, self.butStop, self.musicfield, self.progbar))
         self.butStart.pack(side=LEFT, pady=(45, 0), padx=(25, 0))
         
-        self.butStop = CTkButton(self.buttoncontrainer, text="⏹ STOP", font=("Segoe UI", 15, "bold"), height=45, width=160, corner_radius=7, state=DISABLED)
+        self.butStop = CTkButton(self.buttoncontrainer,
+                                 text="⏹ STOP",
+                                 font=("Segoe UI", 15, "bold"),
+                                 height=45, width=160,
+                                 corner_radius=7,
+                                 state=DISABLED,
+                                 command=lambda: Stop(self.butStart, self.butStop))
         self.butStop.pack(side=LEFT, pady=(45, 0), padx=(10, 0))
         
         self.butChange = CTkButton(self.buttoncontrainer, text="Change HotKey", font=("Segoe UI", 15, "bold"), height=45, width=160, corner_radius=7)
@@ -53,6 +59,7 @@ class App:
         
         self.progbar = CTkProgressBar(self.progbarcont, height=13)
         self.progbar.pack(fill=BOTH, padx=20)
+        self.progbar.set(0)
 
 
         self.app.mainloop()

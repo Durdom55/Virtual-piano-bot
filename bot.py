@@ -8,22 +8,27 @@ from config import *
 #---Var---
 cache = ''
 cacheOn = False
-Sleep=0.4
 
 #---Func---
-def BotPlay(text):
+def BotPlay(text, pb):
     global cacheOn, Sleep, cache, IsRun
     text = text.get('0.0', 'end')
+    numofsteps = len(text)
+    progVal = 1/numofsteps
+    stepVal = 0
+    Sleeptime=Sleep
     print('text get')
     if IsRun==True:
         for i in text:
             if not IsRun:
                 break
             print(i)
+            stepVal+=progVal
+            pb.set(stepVal)
             if i in [' ', '[', ']', '{', '}', '-', '—', '–']:
                 match i:
                     case ' ':
-                        time.sleep(Sleep/Speed)
+                        time.sleep(Sleeptime/Speed)
                     case '[':
                         cacheOn=True
                     case ']':
@@ -31,11 +36,11 @@ def BotPlay(text):
                         print(cache)
                         cash_press(cache)
                         cache=''
-                        time.sleep(Sleep/Speed)
+                        time.sleep(Sleeptime/Speed)
                     case '{':
-                        Sleep-=0.15
+                        Sleeptime-=0.15
                     case '}':
-                        Sleep=0.4
+                        Sleeptime=Sleep
                     case '-':
                         time.sleep(0.5)
                     case '—':
@@ -50,7 +55,7 @@ def BotPlay(text):
                         keyboard.send(f'shift+{i.lower()}')
                     else:      
                         keyboard.send(i)
-                    time.sleep(Sleep/Speed)
+                    time.sleep(Sleeptime/Speed)
     IsRun = False
     
 def cash_press(cache):
@@ -60,30 +65,31 @@ def cash_press(cache):
         else:      
             keyboard.send(i)
 
-def Wait(app, buts, butp, text):
+def Wait(app, buts, butp, text, pb):
     global IsRun
     if HotBut!='':
         if keyboard.is_pressed(HotBut) and NotRecord:
             print("nazhata")
             if IsRun == False:
                 print("Startw")
-                StartBut(buts, butp, text)
+                StartBut(buts, text, pb)
             else:
                 print('StopW')
                 StopBut(buts, butp)
     else:
         showwarning(title='Warning', message='Set HotKey for proper operation')
         return
-    app.after(30, lambda: Wait(app, buts, butp, text))
+    app.after(30, lambda: Wait(app, buts, butp, text, pb))
     
-def Start(app, buts, butp, text):
+def Start(app, buts, butp, text, pb):
     buts.configure(state='disabled')
     buts.configure(text=f'Press {HotBut} to playing')
     butp.configure(state='normal')
-    Wait(app, buts, butp, text)
+    Wait(app, buts, butp, text, pb)
     
 def Stop(buts, butp):
     buts.configure(state='normal')
+    buts.configure(text='▶ START')
     butp.configure(state='disabled')
                 
 def StopBut(buts, butp):
@@ -97,11 +103,12 @@ def StopBut(buts, butp):
     while keyboard.is_pressed(HotBut):
         time.sleep(0.01)
     
-def StartBut(buts, butp, text):
+def StartBut(buts, text, pb):
     global IsRun
     print("Start")
+    pb.set(0)
     IsRun=True
     buts.configure(text=f'Press {HotBut} to stop')
     while keyboard.is_pressed(HotBut):
         time.sleep(0.01)
-    threading.Thread(target=BotPlay, args=(text,), daemon=True).start()
+    threading.Thread(target=BotPlay, args=(text,pb, ), daemon=True).start()
