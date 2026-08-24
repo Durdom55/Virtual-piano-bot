@@ -1,6 +1,6 @@
 #---Imports---
 from customtkinter import * #*
-from utils.bot import *
+from utils import Start, Stop
 from utils import config
 
 #---TopLevel---
@@ -11,10 +11,10 @@ class Toplevel(CTkToplevel):
         self.attributes('-topmost', 1)
         self.resizable(False, False)
         CTkLabel(self, text='HotKey settings',
-                 font=("Consolas", 20, 'bold')).pack(pady=(20, 10), padx=20)
+                 font=("Consolas", 22, 'bold')).pack(pady=(20, 10), padx=20)
         self.inputButton = CTkButton(self,
-                                     text='Press any key',
-                                     font=(("Arial", 20, "bold")),
+                                     text='Click to Set Hotkey',
+                                     font=(("Arial", 17, "bold")),
                                      height=60,
                                      fg_color='#413f41',
                                      hover_color="#3a383a",
@@ -83,7 +83,7 @@ class App(CTk):
         def on_slider_release(event):
             val = round(self.SpeedSlider.get(), 2)
             config.Speed=val
-            self.SpeedText.configure(text=f'Speed: {config.Speed}x')     
+            self.SpeedText.configure(text=f'Speed: {config.Speed}x') 
         
         self.SpeedSlider = CTkSlider(self.buttoncontrainer,
                                      number_of_steps=7, width=140,

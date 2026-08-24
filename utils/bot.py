@@ -1,9 +1,8 @@
 #---Import---
 import keyboard #*
-import threading
-import time
+import threading, time
 from tkinter.messagebox import showwarning
-import config
+from . import config
 
 #---Var---
 cache = ''
