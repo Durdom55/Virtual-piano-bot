@@ -1,7 +1,7 @@
 #---Imports---
 from customtkinter import * #*
-from bot import *
-import config
+from utils.bot import *
+from utils import config
 
 #---TopLevel---
 class Toplevel(CTkToplevel):
