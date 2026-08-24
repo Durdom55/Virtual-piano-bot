@@ -1,5 +1,5 @@
 #---Import---
-import keyboard
+import keyboard #*
 import threading
 import time
 from tkinter.messagebox import showwarning
