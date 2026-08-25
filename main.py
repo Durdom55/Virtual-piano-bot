@@ -1,3 +1,6 @@
+#   keyboard==0.13.5
+#   customtkinter==6.0.0
+
 #---Imports---
 from customtkinter import * #*
 from utils import Start, Stop, PreListening, clear, Save, load
