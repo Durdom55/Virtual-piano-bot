@@ -1,12 +1,13 @@
 #---Imports---
 from customtkinter import * #*
-from utils import Start, Stop
+from utils import Start, Stop, PreListening
 from utils import config
 
 #---TopLevel---
 class Toplevel(CTkToplevel):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, app, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.app = app
         self.geometry('320x200')
         self.attributes('-topmost', 1)
         self.resizable(False, False)
@@ -19,7 +20,8 @@ class Toplevel(CTkToplevel):
                                      fg_color='#413f41',
                                      hover_color="#3a383a",
                                      border_color="#5a575a",
-                                     border_width=2)
+                                     border_width=2,
+                                     command=lambda: PreListening(self, self.inputButton, self.app.toplevel_window))
         self.inputButton.pack(fill=X, pady=10, padx=20)
         
         #---ControlFrame---

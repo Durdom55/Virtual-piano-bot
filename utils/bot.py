@@ -56,6 +56,7 @@ def BotPlay(text, pb):
                         keyboard.send(i)
                     time.sleep(Sleeptime/config.Speed)
     config.IsRun = False
+    pb.set(0)
     
 def cash_press(cache):
     for i in cache:

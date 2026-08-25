@@ -1,4 +1,4 @@
-HotBut="F4"
+HotBut=""
 NotRecord=True
 IsRun=False
 Speed=1
