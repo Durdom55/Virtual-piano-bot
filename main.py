@@ -1,6 +1,6 @@
 #---Imports---
 from customtkinter import * #*
-from utils import Start, Stop, PreListening
+from utils import Start, Stop, PreListening, clear, Save, load
 from utils import config
 
 #---TopLevel---
@@ -10,7 +10,7 @@ class Toplevel(CTkToplevel):
         self.app = app
         self.geometry('320x200')
         self.attributes('-topmost', 1)
-        self.resizable(False, False)
+        self.resizable(False, False)     
         CTkLabel(self, text='HotKey settings',
                  font=("Consolas", 22, 'bold')).pack(pady=(20, 10), padx=20)
         self.inputButton = CTkButton(self,
@@ -22,6 +22,8 @@ class Toplevel(CTkToplevel):
                                      border_color="#5a575a",
                                      border_width=2,
                                      command=lambda: PreListening(self, self.inputButton, self.app.toplevel_window))
+        if config.HotBut != '':
+            self.inputButton.configure(text=f'{config.HotBut}')
         self.inputButton.pack(fill=X, pady=10, padx=20)
         
         #---ControlFrame---
@@ -31,21 +33,23 @@ class Toplevel(CTkToplevel):
         self.clearbut = CTkButton(self.conframe,
                                   text='🗑️ Clear',
                                   font=("Segoe UI", 15, "bold"),
-                                  width=80)
+                                  width=80, command=lambda: clear(self, self.inputButton))
         self.clearbut.pack(side=LEFT, padx=5)
         self.cancelbut = CTkButton(self.conframe,
                                    text='❌ Cancel', 
                                    font=("Segoe UI", 15, "bold"),
                                    width=80,
                                    fg_color="#F44336",
-                                   hover_color="#D32F2F")
+                                   hover_color="#D32F2F",
+                                   command=self.destroy)
         self.cancelbut.pack(side=RIGHT, padx=5)
         self.savebut = CTkButton(self.conframe,
                                  text='💾 Save',
                                  font=("Segoe UI", 15, "bold"),
                                  width=80,
                                  fg_color="#4CAF50",
-                                 hover_color="#388E3C")
+                                 hover_color="#388E3C",
+                                 command=lambda: Save)
         self.savebut.pack(side=RIGHT, padx=5)
         
 #---AppGui---
@@ -85,13 +89,14 @@ class App(CTk):
         def on_slider_release(event):
             val = round(self.SpeedSlider.get(), 2)
             config.Speed=val
+            Save()
             self.SpeedText.configure(text=f'Speed: {config.Speed}x') 
         
         self.SpeedSlider = CTkSlider(self.buttoncontrainer,
                                      number_of_steps=7, width=140,
                                      from_=0.25, to=2)
         self.SpeedSlider.pack(side=TOP, padx=(350, 0), pady=(10, 0))
-        self.SpeedSlider.set(1)
+        self.SpeedSlider.set(config.Speed)
         self.SpeedSlider.bind('<ButtonRelease-1>', on_slider_release)
         
         self.butStart = CTkButton(self.buttoncontrainer,
@@ -138,5 +143,6 @@ class App(CTk):
 
 #--------------run--------------
 if __name__ == "__main__":
+    load()
     app = App()
     app.mainloop()
