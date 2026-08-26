@@ -6,7 +6,7 @@
 from customtkinter import * #*
 from utils import Start, Stop, PreListening, clear, Save, load
 from utils import config
-import tkinter
+import tkinter, os
 
 #---TopLevel---
 class Toplevel(CTkToplevel):
@@ -16,8 +16,13 @@ class Toplevel(CTkToplevel):
         self.geometry('320x200')
         self.attributes('-topmost', 1)
         self.resizable(False, False)     
-        icon = tkinter.PhotoImage(file='assets/iconapp.png')
-        self.iconphoto(False, icon)
+        icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'appico.png')
+        if os.path.exists(icon_path):
+            self.iconphoto(True, tkinter.PhotoImage(file=icon_path))
+        else:
+            icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'appico.ico')
+            if os.path.exists(icon_path):
+                self.wm_iconbitmap(icon_path)
         CTkLabel(self, text='HotKey settings',
                  font=("Consolas", 22, 'bold')).pack(pady=(20, 10), padx=20)
         self.inputButton = CTkButton(self,
@@ -56,7 +61,7 @@ class Toplevel(CTkToplevel):
                                  width=80,
                                  fg_color="#4CAF50",
                                  hover_color="#388E3C",
-                                 command=lambda: Save)
+                                 command=Save)
         self.savebut.pack(side=RIGHT, padx=5)
         
         self.grab_set()
@@ -72,8 +77,13 @@ class App(CTk):
         self.geometry('600x500')
         self.attributes('-topmost', True)
         self.resizable(False, False)
-        iconM = tkinter.PhotoImage(file='assets/iconapp.png')
-        self.iconphoto(False, iconM)
+        icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'appico.png')
+        if os.path.exists(icon_path):
+            self.iconphoto(True, tkinter.PhotoImage(file=icon_path))
+        else:
+            icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'appico.ico')
+            if os.path.exists(icon_path):
+                self.wm_iconbitmap(icon_path)
         
         #---TextContainer---
         self.textcontainer = CTkFrame(master=self, height=340, fg_color="transparent")
@@ -144,6 +154,7 @@ class App(CTk):
         self.progbar.pack(fill=BOTH, padx=20)
         self.progbar.set(0)
         
+        
     #---OpenTopLevel---
     def opentoplevel(self):
         if self.toplevel_window is None or not self.toplevel_window.winfo_exists():
@@ -156,6 +167,7 @@ class App(CTk):
 
 #--------------run--------------
 if __name__ == "__main__":
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
     load()
     app = App()
     app.mainloop()

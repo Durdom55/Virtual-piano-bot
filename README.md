@@ -39,6 +39,7 @@ time
 string
 threading
 json
+os
 ```
 
 ## Функции

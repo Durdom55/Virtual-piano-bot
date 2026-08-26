@@ -1,6 +1,6 @@
 ## Multilanguage README
 [![en](https://img.shields.io/badge/lang-en-red)](assets/readme/README_EN.md)
-[![ru](https://img.shields.io/badge/lang-ru-green)](./README.md)
+[![ru](https://img.shields.io/badge/lang-ru-green)](/README.md)
 
 -------------
 
@@ -39,6 +39,7 @@ time
 string
 threading
 json
+os
 ```
 
 ## Features
