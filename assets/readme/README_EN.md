@@ -40,17 +40,17 @@ json
 ## User Guide for `Windows`
 1. Download the executable from the project releases, or build it yourself
 2. Launch the .exe file and bind a hotkey first-the program will not function without one
- 1. Click the **Change HotKey** button
- 2. In the opened menu, click the center button - **Click to Set Hotkey**
- 3. Press your preferred key combination
- 1. If you want to change it, click **Clear** or click the center button again
- 4. Click the green **Save** button to save your hotkey
- 5. Click the red **Cancel** button to close the window
+    1. Click the **Change HotKey** button
+    2. In the opened menu, click the center button - **Click to Set Hotkey**
+    3. Press your preferred key combination
+       1. If you want to change it, click **Clear** or click the center button again
+    4. Click the green **Save** button to save your hotkey
+    5. Click the red **Cancel** button to close the window
  3. Optionally adjust the speed slider located under **Speed: 1x**
  4. Click **Start**
- 5. Press your assigned hotkey to start playback
- 6. Press the hotkey again to pause/stop playback
- 7. Click **Stop** to disable hotkey listening
+ 5.  Press your assigned hotkey to start playback
+ 6.  Press the hotkey again to pause/stop playback
+ 7.  Click **Stop** to disable hotkey listening
 
 ## User Guide for `Linux`
 1. Download the source code
@@ -58,17 +58,17 @@ json
 3. Install dependencies from **[requirements.txt](requirements.txt)**
 4. Run `main.py` with **root**
 5. Bind a hotkey first-the program will not function without one
- 1. Click the **Change HotKey** button
- 2. In the opened menu, click the center button - **Click to Set Hotkey**
- 3. Press your preferred key combination
- 1. If you want to change it, click **Clear** or click the center button again
- 4. Click the green **Save** button to save your hotkey
- 5. Click the red **Cancel** button to close the window
- 6. Optionally adjust the speed slider located under **Speed: 1x**
- 7. Click **Start**
- 8. Press your assigned hotkey to start playback
- 9. Press the hotkey again to pause/stop playback
- 10. Click **Stop** to disable hotkey listening
+    1. Click the **Change HotKey** button
+    2. In the opened menu, click the center button - **Click to Set Hotkey**
+    3. Press your preferred key combination
+       1. If you want to change it, click **Clear** or click the center button again
+    4. Click the green **Save** button to save your hotkey
+    5.  Click the red **Cancel** button to close the window
+6.  Optionally adjust the speed slider located under **Speed: 1x**
+7.  Click **Start**
+8.  Press your assigned hotkey to start playback
+9.  Press the hotkey again to pause/stop playback
+10. Click **Stop** to disable hotkey listening
 
 ## Screenshot
 
