@@ -40,11 +40,13 @@ def Listening(app, InpBut, win):
                 showerror(title='error', message='Switch to English keyboard layout')
                 return
         else:
+            print('zakrito')
             return
     finally:
-        InpBut.configure(state='normal')
-        app.update()
-        is_listening=False
+        if win.winfo_exists():    
+            InpBut.configure(state='normal')
+            app.update()
+            is_listening=False
     
 def PreListening(app, InpBut, win):
     global is_listening

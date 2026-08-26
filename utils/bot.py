@@ -9,7 +9,7 @@ cache = ''
 cacheOn = False
 
 #---Func---
-def BotPlay(text, pb):
+def BotPlay(text, pb, buts, butp):
     global cacheOn, Sleep, cache
     text = text.get('0.0', 'end')
     numofsteps = len(text)
@@ -57,6 +57,7 @@ def BotPlay(text, pb):
                     time.sleep(Sleeptime/config.Speed)
     config.IsRun = False
     pb.set(0)
+    Stop(buts, butp)
     
 def cash_press(cache):
     for i in cache:
@@ -71,27 +72,38 @@ def Wait(app, buts, butp, text, pb):
             print("nazhata")
             if config.IsRun == False:
                 print("Startw")
-                StartBut(buts, text, pb)
+                StartBut(buts, text, pb, butp)
             else:
                 print('StopW')
                 StopBut(buts, butp)
     else:
         showwarning(title='Warning', message='Set HotKey for proper operation')
+        Stop(app, buts, butp)
         return
     app.after(30, lambda: Wait(app, buts, butp, text, pb))
     
 def Start(app, buts, butp, text, pb):
-    buts.configure(state='disabled')
-    buts.configure(text=f'Press {config.HotBut} to playing')
-    butp.configure(state='normal')
-    Wait(app, buts, butp, text, pb)
+    if config.HotBut != '':    
+        buts.configure(state='disabled')
+        buts.configure(text=f'Press {config.HotBut} to playing')
+        butp.configure(state='normal')
+        app.update()
+        keyboard.unhook_all()
+        if hasattr(keyboard, '_pressed_events'):
+            keyboard._pressed_events.clear()
+        Wait(app, buts, butp, text, pb)
+    else:
+        showwarning(title='Warning', message='Set HotKey for proper operation')
+        Stop(app, buts, butp)
+        return
     
-def Stop(buts, butp):
+def Stop(app, buts, butp):
     buts.configure(state='normal')
     buts.configure(text='▶ START')
     butp.configure(state='disabled')
+    app.update()
                 
-def StopBut(buts, butp):
+def StopBut(buts):
     global cacheOn, cache, Sleep
     cache = ''
     cacheOn = False
@@ -102,11 +114,11 @@ def StopBut(buts, butp):
     while keyboard.is_pressed(config.HotBut):
         time.sleep(0.01)
     
-def StartBut(buts, text, pb):
+def StartBut(buts, text, pb, butp):
     print("Start")
     pb.set(0)
     config.IsRun=True
     buts.configure(text=f'Press {config.HotBut} to stop')
     while keyboard.is_pressed(config.HotBut):
         time.sleep(0.01)
-    threading.Thread(target=BotPlay, args=(text,pb, ), daemon=True).start()
+    threading.Thread(target=BotPlay, args=(text,pb,buts, butp, ), daemon=True).start()

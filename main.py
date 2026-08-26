@@ -121,7 +121,7 @@ class App(CTk):
                                  height=45, width=160,
                                  corner_radius=7,
                                  state=DISABLED,
-                                 command=lambda: Stop(self.butStart, self.butStop))
+                                 command=lambda: Stop(self, self.butStart, self.butStop))
         self.butStop.pack(side=LEFT, pady=(45, 0), padx=(10, 0))
         
         self.butHK = CTkButton(self.buttoncontrainer,
