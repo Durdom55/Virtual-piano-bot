@@ -1,3 +1,4 @@
+#   Python 3.14.7
 #   keyboard==0.13.5
 #   customtkinter==6.0.0
 
@@ -5,6 +6,7 @@
 from customtkinter import * #*
 from utils import Start, Stop, PreListening, clear, Save, load
 from utils import config
+import tkinter
 
 #---TopLevel---
 class Toplevel(CTkToplevel):
@@ -14,6 +16,8 @@ class Toplevel(CTkToplevel):
         self.geometry('320x200')
         self.attributes('-topmost', 1)
         self.resizable(False, False)     
+        icon = tkinter.PhotoImage(file='assets/iconapp.png')
+        self.iconphoto(False, icon)
         CTkLabel(self, text='HotKey settings',
                  font=("Consolas", 22, 'bold')).pack(pady=(20, 10), padx=20)
         self.inputButton = CTkButton(self,
@@ -65,6 +69,8 @@ class App(CTk):
         self.geometry('600x500')
         self.attributes('-topmost', True)
         self.resizable(False, False)
+        iconM = tkinter.PhotoImage(file='assets/iconapp.png')
+        self.iconphoto(False, iconM)
         
         #---TextContainer---
         self.textcontainer = CTkFrame(master=self, height=340, fg_color="transparent")
