@@ -1,6 +1,18 @@
 ## Multilanguage README
 [![en](https://img.shields.io/badge/lang-en-red)](assets/readme/README_EN.md)
 [![ru](https://img.shields.io/badge/lang-ru-green)](./README.md)
+
+-------------
+
+- [Virtual-piano-bot](#virtual-piano-bot)
+  - [Dependencies](#dependencies)
+    - [Third Parties Python Packages](#third-parties-python-packages)
+    - [Built-in Python Modules (Windows \& Linux)](#built-in-python-modules-windows--linux)
+  - [Features](#features)
+  - [User Guide for `Windows`](#user-guide-for-windows)
+  - [User Guide for `Linux`](#user-guide-for-linux)
+  - [Screenshot](#screenshot)
+
 # Virtual-piano-bot
 <!-- ![Github Release]
 ![Github License]
