@@ -6,7 +6,7 @@
 from customtkinter import * #*
 from utils import Start, Stop, PreListening, clear, Save, load
 from utils import config
-import tkinter, os
+import tkinter, tempfile, base64, zlib
 
 #---TopLevel---
 class Toplevel(CTkToplevel):
@@ -16,13 +16,6 @@ class Toplevel(CTkToplevel):
         self.geometry('320x200')
         self.attributes('-topmost', 1)
         self.resizable(False, False)     
-        icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'appico.png')
-        if os.path.exists(icon_path):
-            self.iconphoto(True, tkinter.PhotoImage(file=icon_path))
-        else:
-            icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'appico.ico')
-            if os.path.exists(icon_path):
-                self.wm_iconbitmap(icon_path)
         CTkLabel(self, text='HotKey settings',
                  font=("Consolas", 22, 'bold')).pack(pady=(20, 10), padx=20)
         self.inputButton = CTkButton(self,
@@ -77,13 +70,11 @@ class App(CTk):
         self.geometry('600x500')
         self.attributes('-topmost', True)
         self.resizable(False, False)
-        icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'appico.png')
-        if os.path.exists(icon_path):
-            self.iconphoto(True, tkinter.PhotoImage(file=icon_path))
-        else:
-            icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'appico.ico')
-            if os.path.exists(icon_path):
-                self.wm_iconbitmap(icon_path)
+        ICON = zlib.decompress(base64.b64decode("eJxjYGAEQgEBBiDJwZDBysAgxsDAoAHEQCEGBQaIOAg4sDIgACMUj4JRMApGwQgF/ykEAFXxQRc="))
+        _, ICON_PATH = tempfile.mkstemp()
+        with open(ICON_PATH, "wb") as icon_file:
+            icon_file.write(ICON)
+        self.iconbitmap(default=ICON_PATH)
         
         #---TextContainer---
         self.textcontainer = CTkFrame(master=self, height=340, fg_color="transparent")
@@ -167,7 +158,6 @@ class App(CTk):
 
 #--------------run--------------
 if __name__ == "__main__":
-    os.chdir(os.path.dirname(os.path.abspath(__file__)))
     load()
     app = App()
     app.mainloop()
