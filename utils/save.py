@@ -1,5 +1,5 @@
 from . import config
-import keyboard, string, threading, time, json
+import keyboard, string, threading, json
 from tkinter.messagebox import showerror
 
 is_listening = False
@@ -41,7 +41,6 @@ def Listening(app, InpBut, win):
                 showerror(title='error', message='Switch to English keyboard layout')
                 return
         else:
-            print('zakrito')
             return
     finally:
         if win.winfo_exists():    

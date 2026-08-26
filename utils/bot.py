@@ -16,12 +16,10 @@ def BotPlay(text, pb, buts):
     progVal = 1/numofsteps
     stepVal = 0
     Sleeptime=config.Sleep
-    print('text get')
     if config.IsRun==True:
         for i in text:
             if not config.IsRun:
                 break
-            print(i)
             stepVal+=progVal
             pb.set(stepVal)
             if i in [' ', '[', ']', '{', '}', '-', '—', '–', '|']:
@@ -34,7 +32,6 @@ def BotPlay(text, pb, buts):
                         cacheOn=True
                     case ']':
                         cacheOn=False
-                        print(cache)
                         cash_press(cache)
                         cache=''
                         time.sleep(Sleeptime/config.Speed)
@@ -72,12 +69,9 @@ def Wait(app, buts, butp, text, pb):
     if config.HotBut!='':
         if config.Iswait:        
             if keyboard.is_pressed(config.HotBut) and config.NotRecord:
-                print("nazhata")
                 if config.IsRun == False:
-                    print("Startw")
                     StartBut(buts, text, pb)
                 else:
-                    print('StopW')
                     StopBut(buts)
         else:
             return
@@ -115,14 +109,12 @@ def StopBut(buts):
     cache = ''
     cacheOn = False
     Sleep=0.417
-    print("Stop")
     buts.configure(text=f'Press {config.HotBut} to playing')
     config.IsRun=False
     while keyboard.is_pressed(config.HotBut):
         time.sleep(0.01)
     
 def StartBut(buts, text, pb):
-    print("Start")
     pb.set(0)
     config.IsRun=True
     buts.configure(text=f'Press {config.HotBut} to stop')

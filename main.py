@@ -6,7 +6,6 @@
 from customtkinter import * #*
 from utils import Start, Stop, PreListening, clear, Save, load
 from utils import config
-import tkinter, tempfile, base64, zlib
 
 #---TopLevel---
 class Toplevel(CTkToplevel):
