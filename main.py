@@ -70,11 +70,6 @@ class App(CTk):
         self.geometry('600x500')
         self.attributes('-topmost', True)
         self.resizable(False, False)
-        ICON = zlib.decompress(base64.b64decode("eJxjYGAEQgEBBiDJwZDBysAgxsDAoAHEQCEGBQaIOAg4sDIgACMUj4JRMApGwQgF/ykEAFXxQRc="))
-        _, ICON_PATH = tempfile.mkstemp()
-        with open(ICON_PATH, "wb") as icon_file:
-            icon_file.write(ICON)
-        self.iconbitmap(default=ICON_PATH)
         
         #---TextContainer---
         self.textcontainer = CTkFrame(master=self, height=340, fg_color="transparent")
