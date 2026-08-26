@@ -23,6 +23,7 @@ def Save():
 def Listening(app, InpBut, win):
     global is_listening
     try:
+        config.NotRecord = False
         InpBut.configure(text='Waiting for Input...')
         app.update()
         keyboard.unhook_all()
@@ -47,6 +48,7 @@ def Listening(app, InpBut, win):
             InpBut.configure(state='normal')
             app.update()
             is_listening=False
+        config.NotRecord = True
     
 def PreListening(app, InpBut, win):
     global is_listening

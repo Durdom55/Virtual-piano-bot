@@ -59,6 +59,9 @@ class Toplevel(CTkToplevel):
                                  command=lambda: Save)
         self.savebut.pack(side=RIGHT, padx=5)
         
+        self.grab_set()
+        self.transient(self.app)
+        
 #---AppGui---
 class App(CTk):
     #--ctor--
@@ -144,7 +147,8 @@ class App(CTk):
     #---OpenTopLevel---
     def opentoplevel(self):
         if self.toplevel_window is None or not self.toplevel_window.winfo_exists():
-            self.toplevel_window = Toplevel(self)
+            if not config.Iswait:          
+                self.toplevel_window = Toplevel(self)
         else:
             self.toplevel_window.focus()
         
