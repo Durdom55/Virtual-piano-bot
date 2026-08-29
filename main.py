@@ -7,7 +7,26 @@ from customtkinter import * #*
 from utils import Start, Stop, PreListening, clear, Save, load
 from utils import config
 
-#---TopLevel---
+#---Toplevel2 (Advanced Settings)---
+class AdvLevel(CTkToplevel):
+    def __init__(self, app, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.app = app
+        self.geometry('200x320')
+        self.resizable(False, False)
+        self.attributes('-topmost', 1)
+        
+        CTkLabel(self, text='Delay (sec)', font=('Consolas', 16)).pack(pady=(5, 0))
+        
+        
+        # CTkLabel(self, text='Sleeptime', font=('Consolas', 16)).pack(side=LEFT)
+        
+        # CTkLabel(self, text='Delay offset (sec)', font=('Consolas', 16)).pack(pady=(5, 0))
+        
+        self.grab_set()
+        self.transient(self.app)
+
+#---TopLevel (HotKey)---
 class Toplevel(CTkToplevel):
     def __init__(self, app, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -96,7 +115,7 @@ class App(CTk):
         topline = CTkFrame(rightframe, fg_color='transparent')
         topline.pack(side=TOP, anchor=E)
         
-        self.Advbut = CTkButton(topline, text='⚙️', font=('Segoe UI', 23), height=27, width=30, fg_color='#565c63', hover_color='#5d5d5d')
+        self.Advbut = CTkButton(topline, text='⚙️', font=('Segoe UI', 23), height=27, width=30, fg_color='#565c63', hover_color='#5d5d5d', command=self.opadvlevel)
         self.Advbut.pack(side=RIGHT, padx=(5, 0))
         
         self.SpeedText = CTkLabel(topline, text=f'Speed: {config.Speed}x', fg_color="transparent", font=("Consolas", 19, 'bold'))
@@ -114,6 +133,8 @@ class App(CTk):
         self.SpeedSlider.pack(side=TOP, anchor=E, pady=(0, 0), padx=(0, 37))
         self.SpeedSlider.set(config.Speed)
         self.SpeedSlider.bind('<ButtonRelease-1>', on_slider_release)
+        
+        self.advset_win = None
         
         #---ButtonsContainer---
         self.buttoncontrainer = CTkFrame(master=self, height=160, fg_color="transparent")
@@ -164,6 +185,13 @@ class App(CTk):
                 self.toplevel_window = Toplevel(self)
         else:
             self.toplevel_window.focus()
+    
+    def opadvlevel(self):
+        if self.advset_win is None or not self.advset_win.winfo_exists():
+            if not config.Iswait:          
+                self.advset_win = AdvLevel(self)
+        else:
+            self.advset_win.focus()
         
 
 

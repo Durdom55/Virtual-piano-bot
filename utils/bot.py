@@ -36,15 +36,15 @@ def BotPlay(text, pb, buts):
                         cache=''
                         time.sleep(Sleeptime/config.Speed)
                     case '{':
-                        Sleeptime-=0.15
+                        Sleeptime+=config.parenthesis
                     case '}':
                         Sleeptime=Sleep
                     case '-':
-                        time.sleep((Sleeptime+0.04)/config.Speed)
+                        time.sleep((Sleeptime+config.dash)/config.Speed)
                     case '—':
-                        time.sleep((Sleeptime+0.05)/config.Speed)
+                        time.sleep((Sleeptime+config.bigdash)/config.Speed)
                     case '–':
-                        time.sleep((Sleeptime+0.043)/config.Speed)
+                        time.sleep((Sleeptime+config.middash)/config.Speed)
             else:
                 if cacheOn==True:
                     cache+=i
