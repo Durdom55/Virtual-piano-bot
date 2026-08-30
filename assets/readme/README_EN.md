@@ -50,6 +50,7 @@ re
 + Custom hotkey binding
 + Playback speed configuration
 + Progress bar displaying current track completion
++ Advanced settings
 
 ## User Guide for `Windows`
 1. Download the executable from the project releases, or build it yourself
