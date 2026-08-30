@@ -9,9 +9,9 @@ cache = ''
 cacheOn = False
 
 #---Func---
-def BotPlay(text, pb, buts):
+def BotPlay(app):
     global cacheOn, Sleep, cache
-    text = text.get('0.0', 'end')
+    text = app.musicfield.get('0.0', 'end')
     numofsteps = len(text)
     progVal = 1/numofsteps
     stepVal = 0
@@ -21,7 +21,7 @@ def BotPlay(text, pb, buts):
             if not config.IsRun:
                 break
             stepVal+=progVal
-            pb.set(stepVal)
+            app.progbar.set(stepVal)
             if i in [' ', '[', ']', '{', '}', '-', '—', '–', '|']:
                 match i:
                     case '|':
@@ -55,8 +55,8 @@ def BotPlay(text, pb, buts):
                         keyboard.send(i)
                     time.sleep(Sleeptime/config.Speed)
     config.IsRun = False
-    pb.set(0)
-    StopBut(buts)
+    app.progbar.set(0)
+    StopBut(app)
     
 def cash_press(cache):
     for i in cache:
@@ -65,59 +65,59 @@ def cash_press(cache):
         else:      
             keyboard.send(i)
 
-def Wait(app, buts, butp, text, pb):
+def Wait(app):
     if config.HotBut!='':
         if config.Iswait:        
             if keyboard.is_pressed(config.HotBut) and config.NotRecord:
                 if config.IsRun == False:
-                    StartBut(buts, text, pb)
+                    StartBut(app)
                 else:
-                    StopBut(buts)
+                    StopBut(app)
         else:
             return
     else:
         showwarning(title='Warning', message='Set HotKey for proper operation')
-        Stop(app, buts, butp)
+        Stop(app)
         return
-    app.after(30, lambda: Wait(app, buts, butp, text, pb))
+    app.after(30, lambda: Wait(app))
     
-def Start(app, buts, butp, text, pb):
+def Start(app): #, buts, butp, text, pb
     if config.HotBut != '':    
-        buts.configure(state='disabled')
-        buts.configure(text=f'Press {config.HotBut} to playing')
-        butp.configure(state='normal')
+        app.butStart.configure(state='disabled')
+        app.butStart.configure(text=f'Press {config.HotBut} to playing')
+        app.butStop.configure(state='normal')
         app.update()
         keyboard.unhook_all()
         if hasattr(keyboard, '_pressed_events'):
             keyboard._pressed_events.clear()
         config.Iswait = True
-        Wait(app, buts, butp, text, pb)
+        Wait(app)
     else:
         showwarning(title='Warning', message='Set HotKey for proper operation')
-        Stop(app, buts, butp)
+        Stop(app)
         return
     
-def Stop(app, buts, butp):
-    buts.configure(state='normal')
-    buts.configure(text='▶ START')
-    butp.configure(state='disabled')
+def Stop(app):
+    app.butStart.configure(state='normal')
+    app.butStart.configure(text='▶ START')
+    app.butStop.configure(state='disabled')
     app.update()
     config.Iswait = False
                 
-def StopBut(buts):
+def StopBut(app):
     global cacheOn, cache, Sleep
     cache = ''
     cacheOn = False
     Sleep=0.417
-    buts.configure(text=f'Press {config.HotBut} to playing')
+    app.butStart.configure(text=f'Press {config.HotBut} to playing')
     config.IsRun=False
     while keyboard.is_pressed(config.HotBut):
         time.sleep(0.01)
     
-def StartBut(buts, text, pb):
-    pb.set(0)
+def StartBut(app):
+    app.progbar.set(0)
     config.IsRun=True
-    buts.configure(text=f'Press {config.HotBut} to stop')
+    app.butStart.configure(text=f'Press {config.HotBut} to stop')
     while keyboard.is_pressed(config.HotBut):
         time.sleep(0.01)
-    threading.Thread(target=BotPlay, args=(text,pb, buts,  ), daemon=True).start()
+    threading.Thread(target=BotPlay, args=(app, ), daemon=True).start()

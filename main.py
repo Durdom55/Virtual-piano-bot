@@ -67,11 +67,22 @@ class AdvLevel(CTkToplevel):
         self.butframe1 = CTkFrame(self, fg_color='transparent')
         self.butframe1.pack(fill=X, pady=(15, 5))
         
-        self.sabut = CTkButton(self.butframe1, text='💾 Save', font=('Segoe UI', 14), width=80, fg_color="#4CAF50", hover_color="#388E3C",
+        self.sabut = CTkButton(self.butframe1,
+                               text='💾 Save',
+                               font=('Segoe UI', 14),
+                               width=80,
+                               fg_color="#4CAF50",
+                               hover_color="#388E3C",
                                command=Save)
         self.sabut.pack(side=LEFT, padx=(15, 0))
         
-        self.canbut = CTkButton(self.butframe1, text='❌ Cancel', font=('Segoe UI', 14), width=80, fg_color="#F44336", hover_color="#D32F2F", command=self.destroy)
+        self.canbut = CTkButton(self.butframe1,
+                                text='❌ Cancel',
+                                font=('Segoe UI', 14),
+                                width=80,
+                                fg_color="#F44336",
+                                hover_color="#D32F2F",
+                                command=self.destroy)
         self.canbut.pack(side=RIGHT, padx=(0, 15))
         
         self.butframe1 = CTkFrame(self, fg_color='transparent')
@@ -146,7 +157,7 @@ class Toplevel(CTkToplevel):
                                      hover_color="#3a383a",
                                      border_color="#5a575a",
                                      border_width=2,
-                                     command=lambda: PreListening(self, self.inputButton, self.app.toplevel_window))
+                                     command=lambda: PreListening(self, self.app.toplevel_window))
         if config.HotBut != '':
             self.inputButton.configure(text=f'{config.HotBut}')
         self.inputButton.pack(fill=X, pady=10, padx=20)
@@ -158,7 +169,7 @@ class Toplevel(CTkToplevel):
         self.clearbut = CTkButton(self.conframe,
                                   text='🗑️ Clear',
                                   font=("Segoe UI", 15, "bold"),
-                                  width=80, command=lambda: clear(self, self.inputButton))
+                                  width=80, command=lambda: clear(self))
         self.clearbut.pack(side=LEFT, padx=5)
         self.cancelbut = CTkButton(self.conframe,
                                    text='❌ Cancel', 
@@ -217,7 +228,13 @@ class App(CTk):
         topline = CTkFrame(rightframe, fg_color='transparent')
         topline.pack(side=TOP, anchor=E)
         
-        self.Advbut = CTkButton(topline, text='⚙️', font=('Segoe UI', 23), height=27, width=30, fg_color='#565c63', hover_color='#5d5d5d', command=self.opadvlevel)
+        self.Advbut = CTkButton(topline,
+                                text='⚙️',
+                                font=('Segoe UI', 23),
+                                height=27, width=30,
+                                fg_color='#565c63',
+                                hover_color='#5d5d5d',
+                                command=self.opadvlevel)
         self.Advbut.pack(side=RIGHT, padx=(5, 0))
         
         self.SpeedText = CTkLabel(topline, text=f'Speed: {config.Speed}x', fg_color="transparent", font=("Consolas", 19, 'bold'))
@@ -250,7 +267,8 @@ class App(CTk):
                                   text="▶ START",
                                   font=("Segoe UI", 15, "bold"),
                                   height=45, width=160, corner_radius=7,
-                                  command=lambda: Start(self, self.butStart, self.butStop, self.musicfield, self.progbar))
+                                  command=lambda: Start(self))
+        #self, self.butStart, self.butStop, self.musicfield, self.progbar
         self.butStart.pack(side=LEFT, pady=(45, 0), padx=(25, 0))
         
         self.butStop = CTkButton(self.buttoncontrainer,
@@ -259,7 +277,7 @@ class App(CTk):
                                  height=45, width=160,
                                  corner_radius=7,
                                  state=DISABLED,
-                                 command=lambda: Stop(self, self.butStart, self.butStop))
+                                 command=lambda: Stop(self))
         self.butStop.pack(side=LEFT, pady=(45, 0), padx=(10, 0))
         
         self.butHK = CTkButton(self.buttoncontrainer,

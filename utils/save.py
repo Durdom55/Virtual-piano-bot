@@ -31,11 +31,11 @@ def Save():
         json.dump(config.saves, f, indent=4)
     print('save')
 
-def Listening(app, InpBut, win):
+def Listening(app, win):
     global is_listening
     try:
         config.NotRecord = False
-        InpBut.configure(text='Waiting for Input...')
+        app.inputButton.configure(text='Waiting for Input...')
         app.update()
         keyboard.unhook_all()
         if hasattr(keyboard, '_pressed_events'):
@@ -44,10 +44,9 @@ def Listening(app, InpBut, win):
         if win.winfo_exists():
             if langcheck(hotkey):
                 config.HotBut = hotkey
-                InpBut.configure(text=f'{config.HotBut}')
+                app.inputButton.configure(text=f'{config.HotBut}')
                 app.update()
                 return
-                
             else:
                 showerror(title='error', message='Switch to English keyboard layout')
                 return
@@ -55,12 +54,15 @@ def Listening(app, InpBut, win):
             return
     finally:
         if win.winfo_exists():    
-            InpBut.configure(state='normal')
+            app.inputButton.configure(state='normal')
+            app.cancelbut.configure(state='normal')
+            app.clearbut.configure(state='normal')
+            app.savebut.configure(state='normal')  
             app.update()
             is_listening=False
         config.NotRecord = True
     
-def PreListening(app, InpBut, win):
+def PreListening(app, win):
     global is_listening
     if config.IsRun:
         return
@@ -69,9 +71,12 @@ def PreListening(app, InpBut, win):
             return
         is_listening = True
         config.HotBut = ''
-        InpBut.configure(state='disabled')
+        app.inputButton.configure(state='disabled')
+        app.cancelbut.configure(state='disabled')
+        app.clearbut.configure(state='disabled')
+        app.savebut.configure(state='disabled')        
         app.update()
-    threading.Thread(target=Listening, args=(app, InpBut, win, ), daemon=True).start()
+    threading.Thread(target=Listening, args=(app, win, ), daemon=True).start()
     
 def langcheck(key):
     keys = key.split('+')
@@ -81,12 +86,13 @@ def langcheck(key):
                 return False
     return True
 
-def clear(app, InpBut):
+def clear(app):
+    global is_listening
     if config.IsRun:
         return
     if not is_listening:
         config.HotBut = ''
-        InpBut.configure(text='Click to Set Hotkey')
+        app.inputButton.configure(text='Click to Set Hotkey')
         app.update()
         
 def ToDefault(app):
