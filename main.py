@@ -82,19 +82,47 @@ class AdvLevel(CTkToplevel):
         self.defbut.pack(side=BOTTOM)
         
         #--Change--
-        def changes(event=None):
-            config.Sleep = float(self.sleepen.get())
-            config.dash = float(self.dEn.get())
-            config.bigdash = float(self.middEn.get())
-            config.middash = float(self.bigdEn.get())
-            config.parenthesis = float(self.par.get())
+        def changes(event, entry, name):
+            text = entry.get().strip()
+            
+            if text != '' and text[0] == "-":
+                if text in ('', '-'):
+                    entry.configure(validate='none')
+                    entry.set(config.default_parenthesis)
+                    entry.configure(validate='key')
+                    return
+                config.parenthesis = float(self.par.get())
+                return
+            if text in (''):
+                entry.configure(validate='none')
+                match name:
+                    case 'Sleep':
+                        entry.set(config.default_Sleep)
+                    case 'dash':
+                        entry.set(config.default_dash)
+                    case 'middash':
+                        entry.set(config.default_middash)
+                    case 'bigdash':
+                        entry.set(config.default_bigdash)
+                entry.configure(validate='key')
+                return
+            match name:
+                case 'Sleep':
+                    config.Sleep = float(entry.get())
+                case 'dash':
+                    config.dash = float(entry.get())
+                case 'middash':
+                    config.middash = float(entry.get())
+                case 'bigdash':
+                    config.bigdash = float(entry.get())
+            return
         
         #--Bind--
-        self.sleepen.bind('<FocusOut>', changes)
-        self.dEn.bind('<FocusOut>', changes)
-        self.middEn.bind('<FocusOut>', changes)
-        self.bigdEn.bind('<FocusOut>', changes)
-        self.par.bind('<FocusOut>', changes)
+        self.sleepen.bind('<FocusOut>', lambda e: changes(e, self.sleepen, 'Sleep'))
+        self.dEn.bind('<FocusOut>', lambda e: changes(e, self.dEn, 'dash'))
+        self.middEn.bind('<FocusOut>', lambda e: changes(e, self.middEn, 'middash'))
+        self.bigdEn.bind('<FocusOut>', lambda e: changes(e, self.bigdEn, 'bigdash'))
+        self.par.bind('<FocusOut>', lambda e: changes(e, self.par, ''))
         
         self.grab_set()
         self.transient(self.app)

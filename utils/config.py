@@ -17,7 +17,7 @@ Speed=1.0
 
 #--Default--
 default_Sleep=0.17
-default_dash = 0.04
-default_bigdash = 0.05
-default_middash = 0.043
-default_parenthesis = -0.15
+default_dash =0.04
+default_bigdash =0.05
+default_middash =0.043
+default_parenthesis =-0.15
