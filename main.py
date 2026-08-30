@@ -4,8 +4,9 @@
 
 #---Imports---
 from customtkinter import * #*
-from utils import Start, Stop, PreListening, clear, Save, load
+from utils import Start, Stop, PreListening, clear, Save, load, ToDefault
 from utils import config
+import re
 
 #---Toplevel2 (Advanced Settings)---
 class AdvLevel(CTkToplevel):
@@ -16,15 +17,88 @@ class AdvLevel(CTkToplevel):
         self.resizable(False, False)
         self.attributes('-topmost', 1)
         
-        CTkLabel(self, text='Delay (sec)', font=('Consolas', 16)).pack(pady=(5, 0))
+        CTkLabel(master=self, text='Delay (sec)', font=('Consolas', 16)).pack(pady=(5, 0))
         
+        self.sleepframe = CTkFrame(master=self, fg_color='transparent')
+        self.sleepframe.pack(fill=X, pady=5, padx=7)
         
-        # CTkLabel(self, text='Sleeptime', font=('Consolas', 16)).pack(side=LEFT)
+        CTkLabel(self.sleepframe, text='Sleeptime', font=('Consolas', 14)).pack(side=LEFT)
         
-        # CTkLabel(self, text='Delay offset (sec)', font=('Consolas', 16)).pack(pady=(5, 0))
+        def valid_positive(new_value):
+            return bool(re.fullmatch(r'\d*\.?\d*', new_value))
+        
+        def valid_negative(new_value):
+            return bool(re.fullmatch(r'-\d*\.?\d*', new_value))
+        
+        self.sleepen = CTkEntry(self.sleepframe, width=90, font=('Arial', 14), validate='key', validatecommand=(self.register(valid_positive), '%P'))
+        self.sleepen.pack(side=RIGHT, padx=(5,0))
+        self.sleepen.set(config.Sleep)
+        
+        CTkLabel(self, text='Delay offset (sec)', font=('Consolas', 16)).pack(pady=(8, 0))
+        
+        self.frame1 = CTkFrame(self, fg_color='transparent')
+        self.frame1.pack(fill=X, pady=(5,0), padx=40)
+        CTkLabel(self.frame1, text= '-', font=('Consolas', 14, 'bold')).pack(side=LEFT)
+        self.dEn = CTkEntry(self.frame1, width=90, font=('Arial', 14), validate='key', validatecommand=(self.register(valid_positive), '%P'))
+        self.dEn.pack(side=RIGHT, padx=(5, 0))
+        self.dEn.set(config.dash)
+        
+        self.frame2 = CTkFrame(self, fg_color='transparent')
+        self.frame2.pack(fill=X, pady=(5,0), padx=40)
+        CTkLabel(self.frame2, text= '–', font=('Consolas', 14, 'bold')).pack(side=LEFT)
+        self.middEn = CTkEntry(self.frame2, width=90, font=('Arial', 14), validate='key', validatecommand=(self.register(valid_positive), '%P'))
+        self.middEn.pack(side=RIGHT, padx=(5, 0))
+        self.middEn.set(config.middash)
+        
+        self.frame3 = CTkFrame(self, fg_color='transparent')
+        self.frame3.pack(fill=X, pady=(5,0), padx=40)
+        CTkLabel(self.frame3, text= '—', font=('Consolas', 14, 'bold')).pack(side=LEFT)
+        self.bigdEn = CTkEntry(self.frame3, width=90, font=('Arial', 14), validate='key', validatecommand=(self.register(valid_positive), '%P'))
+        self.bigdEn.pack(side=RIGHT, padx=(5, 0))
+        self.bigdEn.set(config.bigdash)
+        
+        self.frame4 = CTkFrame(self, fg_color='transparent')
+        self.frame4.pack(fill=X, pady=(5,0), padx=40)
+        CTkLabel(self.frame4, text= '{}', font=('Consolas', 14, 'bold')).pack(side=LEFT)
+        self.par = CTkEntry(self.frame4, width=90, font=('Arial', 14), validate='key', validatecommand=(self.register(valid_negative), '%P'))
+        self.par.pack(side=RIGHT, padx=(5, 0))
+        self.par.set(config.parenthesis)
+        
+        self.butframe1 = CTkFrame(self, fg_color='transparent')
+        self.butframe1.pack(fill=X, pady=(15, 5))
+        
+        self.sabut = CTkButton(self.butframe1, text='💾 Save', font=('Segoe UI', 14), width=80, fg_color="#4CAF50", hover_color="#388E3C",
+                               command=Save)
+        self.sabut.pack(side=LEFT, padx=(15, 0))
+        
+        self.canbut = CTkButton(self.butframe1, text='❌ Cancel', font=('Segoe UI', 14), width=80, fg_color="#F44336", hover_color="#D32F2F", command=self.destroy)
+        self.canbut.pack(side=RIGHT, padx=(0, 15))
+        
+        self.butframe1 = CTkFrame(self, fg_color='transparent')
+        self.butframe1.pack(fill=X)
+        
+        self.defbut = CTkButton(self.butframe1, text='Set to Default', font=('Segoe UI', 13),
+                                command=lambda: ToDefault(self))
+        self.defbut.pack(side=BOTTOM)
+        
+        #--Change--
+        def changes(event=None):
+            config.Sleep = float(self.sleepen.get())
+            config.dash = float(self.dEn.get())
+            config.bigdash = float(self.middEn.get())
+            config.middash = float(self.bigdEn.get())
+            config.parenthesis = float(self.par.get())
+        
+        #--Bind--
+        self.sleepen.bind('<FocusOut>', changes)
+        self.dEn.bind('<FocusOut>', changes)
+        self.middEn.bind('<FocusOut>', changes)
+        self.bigdEn.bind('<FocusOut>', changes)
+        self.par.bind('<FocusOut>', changes)
         
         self.grab_set()
         self.transient(self.app)
+        
 
 #---TopLevel (HotKey)---
 class Toplevel(CTkToplevel):

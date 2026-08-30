@@ -40,6 +40,7 @@ string
 threading
 json
 os
+re
 ```
 
 ## Features

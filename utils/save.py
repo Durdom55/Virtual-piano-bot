@@ -11,14 +11,25 @@ def load():
             config.saves = json.load(f)
         config.HotBut = config.saves.get('HotBut', config.HotBut)
         config.Speed = config.saves.get('Speed', config.Speed)
+        config.Sleep = config.saves.get('Sleep', config.Sleep)
+        config.dash = config.saves.get('dash', config.dash)
+        config.bigdash = config.saves.get('bigdash', config.bigdash)
+        config.middash = config.saves.get('middash', config.middash)
+        config.parenthesis = config.saves.get('parenthesis', config.parenthesis)
     except:
         pass
 
 def Save():
     config.saves['HotBut'] = config.HotBut
     config.saves['Speed'] = config.Speed
+    config.saves['Sleep'] = config.Sleep
+    config.saves['dash'] = config.dash
+    config.saves['bigdash'] = config.bigdash
+    config.saves['middash'] = config.middash
+    config.saves['parenthesis'] = config.parenthesis
     with open ('Settings.json', 'w') as f:
         json.dump(config.saves, f, indent=4)
+    print('save')
 
 def Listening(app, InpBut, win):
     global is_listening
@@ -77,3 +88,15 @@ def clear(app, InpBut):
         config.HotBut = ''
         InpBut.configure(text='Click to Set Hotkey')
         app.update()
+        
+def ToDefault(app):
+    config.Sleep = config.default_Sleep
+    config.dash = config.default_dash
+    config.bigdash = config.default_bigdash
+    config.middash = config.default_middash
+    config.parenthesis = config.default_parenthesis
+    app.middEn.set(config.middash)
+    app.par.set(config.parenthesis)
+    app.bigdEn.set(config.bigdash)
+    app.dEn.set(config.dash)
+    app.sleepen.set(config.Sleep)

@@ -13,7 +13,7 @@ bigdash = 0.05
 middash = 0.043
 parenthesis = -0.15
 
-Speed=1
+Speed=1.0
 
 #--Default--
 default_Sleep=0.17
