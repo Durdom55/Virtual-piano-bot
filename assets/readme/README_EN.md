@@ -14,9 +14,9 @@
   - [Screenshot](#screenshot)
 
 # Virtual-piano-bot
-<!-- ![Github Release]
-![Github License]
-![Github Downloads (all assets, all releases)] -->
+![GitHub Release](https://img.shields.io/github/v/release/Durdom55/Virtual-piano-bot)
+![GitHub License](https://img.shields.io/github/license/Durdom55/Virtual-piano-bot)
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/Durdom55/Virtual-piano-bot/total)
 
 A software tool for **automatically** playing music on virtual pianos, including in **`Roblox`**, written with `Python 3.14.7`. Simply paste your sheet notes into the text field, adjust the playback speed, and launch the bot. It supports **single notes**, **chords** (in square brackets), **pauses** and **more**. The bot is controlled via a **custom hotkey**, **save settings** is fully supported
 
