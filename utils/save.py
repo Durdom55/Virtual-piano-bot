@@ -102,7 +102,9 @@ def ToDefault(app):
     config.middash = config.default_middash
     config.parenthesis = config.default_parenthesis
     app.middEn.set(config.middash)
+    app.par.configure(validate='none')
     app.par.set(config.parenthesis)
+    app.par.configure(validate='key')
     app.bigdEn.set(config.bigdash)
     app.dEn.set(config.dash)
     app.sleepen.set(config.Sleep)
