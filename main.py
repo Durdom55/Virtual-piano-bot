@@ -220,6 +220,15 @@ class App(CTk):
         self.othercontainer.pack(fill=X, side=TOP)
         self.othercontainer.pack_propagate(False)
         
+        self.saveSong = CTkButton(self.othercontainer, text='Save Song', width=80, height=30)
+        self.saveSong.pack(side=LEFT, padx=(10, 0))
+        
+        self.plussong = CTkButton(self.othercontainer, text="+", width=30)
+        self.plussong.pack(side=LEFT, padx=(5, 0))
+        
+        self.allsongs = CTkComboBox(self.othercontainer, width=200, values=[''])
+        self.allsongs.pack(side=LEFT, padx=(15, 0))
+        
         #--RightFrame--
         rightframe = CTkFrame(self.othercontainer, fg_color='transparent')
         rightframe.pack(side=RIGHT, anchor=E, padx=(0, 20), pady=5)
@@ -258,9 +267,6 @@ class App(CTk):
         #---ButtonsContainer---
         self.buttoncontrainer = CTkFrame(master=self, height=160, fg_color="transparent")
         self.buttoncontrainer.pack(fill=BOTH, side=TOP)
-        
-        # self.savechang = CTkOptionMenu(self.buttoncontrainer, values=["megolav", 'tripitopi'])
-        # self.savechang.pack(anchor=NW, pady=(0,45), padx=(0, 10))
         
         
         self.butStart = CTkButton(self.buttoncontrainer,
