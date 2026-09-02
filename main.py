@@ -4,8 +4,7 @@
 
 #---Imports---
 from customtkinter import * #*
-from utils import Start, Stop, PreListening, clear, Save, load, ToDefault
-from utils import config
+from utils import config, Start, Stop, PreListening, clear, Save, load, ToDefault, NewSong
 import re
 
 #---Toplevel2 (Advanced Settings)---
@@ -223,10 +222,10 @@ class App(CTk):
         self.saveSong = CTkButton(self.othercontainer, text='Save Song', width=80, height=30)
         self.saveSong.pack(side=LEFT, padx=(10, 0))
         
-        self.plussong = CTkButton(self.othercontainer, text="+", width=30)
+        self.plussong = CTkButton(self.othercontainer, text="+", width=30, command=lambda: NewSong(self))
         self.plussong.pack(side=LEFT, padx=(5, 0))
         
-        self.allsongs = CTkComboBox(self.othercontainer, width=200, values=[''])
+        self.allsongs = CTkComboBox(self.othercontainer, width=200, values=config.songs)
         self.allsongs.pack(side=LEFT, padx=(15, 0))
         
         #--RightFrame--

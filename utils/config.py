@@ -1,6 +1,7 @@
 #---Var---
 HotBut=""
 saves = {}
+songs = ['New song №1']
 
 #--Bool--
 NotRecord=True
