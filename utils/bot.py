@@ -111,12 +111,14 @@ def StopBut(app):
     Sleep=0.417
     app.butStart.configure(text=f'Press {config.HotBut} to playing')
     config.IsRun=False
+    app.allsongs.configure(state='normal')
     while keyboard.is_pressed(config.HotBut):
         time.sleep(0.01)
     
 def StartBut(app):
     app.progbar.set(0)
     config.IsRun=True
+    app.allsongs.configure(state='disabled')
     app.butStart.configure(text=f'Press {config.HotBut} to stop')
     while keyboard.is_pressed(config.HotBut):
         time.sleep(0.01)

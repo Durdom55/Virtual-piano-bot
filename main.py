@@ -4,7 +4,7 @@
 
 #---Imports---
 from customtkinter import * #*
-from utils import config, Start, Stop, PreListening, clear, Save, load, ToDefault, NewSong
+from utils import config, Start, Stop, PreListening, clear, Save, load, ToDefault, NewSong, DeleteSong
 import re
 
 #---Toplevel2 (Advanced Settings)---
@@ -219,7 +219,7 @@ class App(CTk):
         self.othercontainer.pack(fill=X, side=TOP)
         self.othercontainer.pack_propagate(False)
         
-        self.deleteSong = CTkButton(self.othercontainer, text='🗑️', width=30)
+        self.deleteSong = CTkButton(self.othercontainer, text='🗑️', width=30, command=lambda: DeleteSong(self))
         self.deleteSong.pack(side=LEFT, padx=(20, 0))
         
         self.plussong = CTkButton(self.othercontainer, text="+", width=30, command=lambda: NewSong(self))
@@ -313,7 +313,7 @@ class App(CTk):
     
     def opadvlevel(self):
         if self.advset_win is None or not self.advset_win.winfo_exists():
-            if not config.Iswait:          
+            if not config.IsRun:          
                 self.advset_win = AdvLevel(self)
         else:
             self.advset_win.focus()
