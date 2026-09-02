@@ -1,8 +1,11 @@
 #---Var---
 HotBut=""
 saves = {}
+#--Song--
 songs = ['New song №1']
-
+current_song = 'New song №1'
+current_song_data = {}
+sheets = ''
 #--Bool--
 NotRecord=True
 IsRun=False

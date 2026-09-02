@@ -4,8 +4,9 @@
 
 #---Imports---
 from customtkinter import * #*
-from utils import config, Start, Stop, PreListening, clear, Save, load, ToDefault, NewSong, DeleteSong
+from utils import config, Start, Stop, PreListening, clear, Save, load, ToDefault, NewSong, DeleteSong, SaveSong, LoadSong
 import re
+from tkinter.messagebox import showwarning
 
 #---Toplevel2 (Advanced Settings)---
 class AdvLevel(CTkToplevel):
@@ -195,12 +196,19 @@ class App(CTk):
     #--ctor--
     def __init__(self): 
         super().__init__() 
+        
+        #---FINISH---
+        def finish():
+            SaveSong(self) 
+            self.destroy()
+            
         set_default_color_theme('dark-blue')
         self.title("Virtual Piano Bot")
         self.geometry('600x500')
         self.attributes('-topmost', True)
         self.resizable(False, False)
-        
+        self.protocol("WM_DELETE_WINDOW", finish)
+        LoadSong(self)
         #---TextContainer---
         self.textcontainer = CTkFrame(master=self, height=340, fg_color="transparent")
         self.textcontainer.pack(fill=BOTH, side=BOTTOM, padx=20, pady=10)
@@ -211,6 +219,7 @@ class App(CTk):
     
         self.musicfield = CTkTextbox(self.textcontainer, width=200, height=300, font=("Consolas", 20, 'bold'), undo=True, maxundo=15)
         self.musicfield.pack(side=BOTTOM, fill=BOTH)
+        self.musicfield.insert('0.0', config.sheets)
         
         self.musicfield.bind('<Control-a>', select_all)
         
@@ -225,8 +234,27 @@ class App(CTk):
         self.plussong = CTkButton(self.othercontainer, text="+", width=30, command=lambda: NewSong(self))
         self.plussong.pack(side=LEFT, padx=(5, 0))
         
-        self.allsongs = CTkComboBox(self.othercontainer, width=200, values=config.songs)
+        def SongRename(*args):
+            current_text = text_var.get()
+            try:   
+                os.rename(f'Saves/{config.current_song}', f'Saves/{current_text}')
+                config.current_song = current_text
+                Save()
+            except:
+                showwarning(title='Warning', message='This name is already used for another file')
+                self.allsongs.set(config.current_song)
+            print(current_text)
+        
+        text_var = StringVar()
+        
+        self.allsongs = CTkComboBox(self.othercontainer,
+                                    width=200,
+                                    values=config.songs,
+                                    variable=text_var)
         self.allsongs.pack(side=LEFT, padx=(15, 0))
+        self.allsongs.set(config.current_song)
+        
+        text_var.trace_add('write', SongRename)
         
         #--RightFrame--
         rightframe = CTkFrame(self.othercontainer, fg_color='transparent')
@@ -251,7 +279,7 @@ class App(CTk):
         def on_slider_release(event):
             val = round(self.SpeedSlider.get(), 2)
             config.Speed=val
-            Save()
+            SaveSong()
             self.SpeedText.configure(text=f'Speed: {config.Speed}x') 
         
         self.SpeedSlider = CTkSlider(rightframe,
@@ -301,7 +329,7 @@ class App(CTk):
         self.progbar = CTkProgressBar(self.progbarcont, height=13)
         self.progbar.pack(fill=BOTH, padx=20)
         self.progbar.set(0)
-        
+       
         
     #---OpenTopLevel---
     def opentoplevel(self):

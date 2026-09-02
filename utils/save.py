@@ -10,23 +10,25 @@ def load():
         with open ('Settings.json', 'r') as f:
             config.saves = json.load(f)
         config.HotBut = config.saves.get('HotBut', config.HotBut)
-        config.Speed = config.saves.get('Speed', config.Speed)
         config.Sleep = config.saves.get('Sleep', config.Sleep)
         config.dash = config.saves.get('dash', config.dash)
         config.bigdash = config.saves.get('bigdash', config.bigdash)
         config.middash = config.saves.get('middash', config.middash)
         config.parenthesis = config.saves.get('parenthesis', config.parenthesis)
+        config.songs = config.saves.get('songs', config.songs)
+        config.current_song = config.saves.get('current_song', config.current_song)
     except:
         pass
 
 def Save():
     config.saves['HotBut'] = config.HotBut
-    config.saves['Speed'] = config.Speed
     config.saves['Sleep'] = config.Sleep
     config.saves['dash'] = config.dash
     config.saves['bigdash'] = config.bigdash
     config.saves['middash'] = config.middash
     config.saves['parenthesis'] = config.parenthesis
+    config.saves['songs'] = config.songs
+    config.saves['current_song'] = config.current_song
     with open ('Settings.json', 'w') as f:
         json.dump(config.saves, f, indent=4)
     print('save')
