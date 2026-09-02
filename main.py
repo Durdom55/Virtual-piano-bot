@@ -219,8 +219,8 @@ class App(CTk):
         self.othercontainer.pack(fill=X, side=TOP)
         self.othercontainer.pack_propagate(False)
         
-        self.saveSong = CTkButton(self.othercontainer, text='Save Song', width=80, height=30)
-        self.saveSong.pack(side=LEFT, padx=(10, 0))
+        self.deleteSong = CTkButton(self.othercontainer, text='🗑️', width=30)
+        self.deleteSong.pack(side=LEFT, padx=(20, 0))
         
         self.plussong = CTkButton(self.othercontainer, text="+", width=30, command=lambda: NewSong(self))
         self.plussong.pack(side=LEFT, padx=(5, 0))
