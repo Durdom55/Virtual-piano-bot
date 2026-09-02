@@ -4,7 +4,7 @@
 
 #---Imports---
 from customtkinter import * #*
-from utils import config, Start, Stop, PreListening, clear, Save, load, ToDefault, NewSong, DeleteSong, SaveSong, LoadSong
+from utils import config, Start, Stop, PreListening, clear, Save, load, ToDefault, NewSong, DeleteSong, SaveSong, LoadSong, SongChange
 import re
 from tkinter.messagebox import showwarning
 
@@ -234,27 +234,30 @@ class App(CTk):
         self.plussong = CTkButton(self.othercontainer, text="+", width=30, command=lambda: NewSong(self))
         self.plussong.pack(side=LEFT, padx=(5, 0))
         
-        def SongRename(*args):
-            current_text = text_var.get()
-            try:   
-                os.rename(f'Saves/{config.current_song}', f'Saves/{current_text}')
-                config.current_song = current_text
-                Save()
-            except:
+        def SongRename(event):
+            current_text = self.allsongs.get()
+            if os.path.isfile(f'Saves/{current_text}') and current_text != config.current_song:
                 showwarning(title='Warning', message='This name is already used for another file')
                 self.allsongs.set(config.current_song)
+            else:
+                os.rename(f'Saves/{config.current_song}', f'Saves/{current_text}')
+                i = config.songs.index(config.current_song)
+                config.songs[i] = current_text
+                config.current_song = current_text
+                Save()
+            self.focus_set()
             print(current_text)
-        
-        text_var = StringVar()
+            print(config.songs)
+            
         
         self.allsongs = CTkComboBox(self.othercontainer,
                                     width=200,
                                     values=config.songs,
-                                    variable=text_var)
+                                    command=lambda choice: SongChange(self, choice))
         self.allsongs.pack(side=LEFT, padx=(15, 0))
         self.allsongs.set(config.current_song)
         
-        text_var.trace_add('write', SongRename)
+        self.allsongs.bind('<FocusOut>', SongRename)
         
         #--RightFrame--
         rightframe = CTkFrame(self.othercontainer, fg_color='transparent')
@@ -279,7 +282,7 @@ class App(CTk):
         def on_slider_release(event):
             val = round(self.SpeedSlider.get(), 2)
             config.Speed=val
-            SaveSong()
+            SaveSong(self)
             self.SpeedText.configure(text=f'Speed: {config.Speed}x') 
         
         self.SpeedSlider = CTkSlider(rightframe,

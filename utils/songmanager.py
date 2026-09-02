@@ -19,6 +19,10 @@ def LoadSong(app):
             config.current_song_data = json.load(f)
         config.Speed = config.current_song_data.get('Speed', config.Speed)
         config.sheets = config.current_song_data.get('Sheets', config.sheets)
+        app.SpeedText.configure(text=f'Speed: {config.Speed}x')
+        app.SpeedSlider.set(config.Speed)
+        app.musicfield.delete('1.0', 'end')
+        app.musicfield.insert('0.0', config.sheets)
         print(config.sheets)
     except:
         SaveSong(app)
@@ -31,10 +35,15 @@ def NewSong(app):
         while new_song in config.songs:
             new_song = f'New song №{song_index+1}'
         config.songs.append(new_song)
+        SaveSong(app)
         config.current_song = new_song
         app.allsongs.configure(values=config.songs)
         app.allsongs.set(config.songs[song_index-1])
         app.deleteSong.configure(state="normal")
+        app.musicfield.delete('1.0', 'end')
+        config.Speed = 1.0
+        app.SpeedText.configure(text=f'Speed: {config.Speed}x')
+        app.SpeedSlider.set(config.Speed)
         Save()
         SaveSong(app)
         print(config.songs)
@@ -54,5 +63,13 @@ def DeleteSong(app):
             config.current_song = cur_song
             app.allsongs.set(cur_song)
             Save()
+            LoadSong(app)
             print(config.songs)
         app.plussong.configure(state='normal')
+        
+def SongChange(app, choise):
+    print(choise)
+    SaveSong(app)
+    config.current_song = choise
+    Save()
+    LoadSong(app)
