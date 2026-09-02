@@ -1,4 +1,3 @@
-from tkinter.messagebox import showerror
 import json, os
 from . import config
 from .save import Save
