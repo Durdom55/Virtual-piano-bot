@@ -2,6 +2,8 @@ test.py
 test2.py
 Settings.json
 
+Saves/*
+!Saves/.gitkeep
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
