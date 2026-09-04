@@ -10,7 +10,7 @@ def SaveSong(app):
         pass
     with open(f'Saves/{config.current_song}', 'w') as f:
         json.dump(config.current_song_data, f, indent=4)
-    print('save song')
+    #print('save song')
     
 def LoadSong(app):
     try:
@@ -22,7 +22,7 @@ def LoadSong(app):
         app.SpeedSlider.set(config.Speed)
         app.musicfield.delete('1.0', 'end')
         app.musicfield.insert('0.0', config.sheets)
-        print(config.sheets)
+        #print(config.sheets)
     except:
         SaveSong(app)
     
@@ -45,7 +45,7 @@ def NewSong(app):
         app.SpeedSlider.set(config.Speed)
         Save()
         SaveSong(app)
-        print(config.songs)
+        #print(config.songs)
     
 def DeleteSong(app):
     if not config.IsRun:
@@ -53,7 +53,7 @@ def DeleteSong(app):
         quan = len(config.songs)
         if quan > 1:    
             current_song = app.allsongs.get()
-            print(current_song)
+            #print(current_song)
             config.songs.remove(current_song)
             os.remove(f'Saves/{config.current_song}')
             song_index = len(config.songs)
@@ -63,11 +63,11 @@ def DeleteSong(app):
             app.allsongs.set(cur_song)
             Save()
             LoadSong(app)
-            print(config.songs)
+            #print(config.songs)
         app.plussong.configure(state='normal')
         
 def SongChange(app, choise):
-    print(choise)
+    #print(choise)
     SaveSong(app)
     config.current_song = choise
     Save()

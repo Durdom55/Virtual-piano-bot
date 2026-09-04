@@ -31,7 +31,7 @@ def Save():
     config.saves['current_song'] = config.current_song
     with open ('Settings.json', 'w') as f:
         json.dump(config.saves, f, indent=4)
-    print('save')
+    #print('save')
 
 def Listening(app, win):
     global is_listening

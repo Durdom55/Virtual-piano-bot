@@ -247,8 +247,8 @@ class App(CTk):
                 Save()
             self.focus_set()
             self.allsongs.configure(values=config.songs)
-            print(current_text)
-            print(config.songs)
+            #print(current_text)
+            #print(config.songs)
             
         
         self.allsongs = CTkComboBox(self.othercontainer,
