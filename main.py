@@ -246,6 +246,7 @@ class App(CTk):
                 config.current_song = current_text
                 Save()
             self.focus_set()
+            self.allsongs.configure(values=config.songs)
             print(current_text)
             print(config.songs)
             

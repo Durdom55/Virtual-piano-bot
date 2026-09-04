@@ -2,7 +2,6 @@ test.py
 test2.py
 Settings.json
 
-Saves/*
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

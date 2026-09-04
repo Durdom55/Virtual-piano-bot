@@ -51,6 +51,7 @@ re
 + Playback speed configuration
 + Progress bar displaying current track completion
 + Advanced settings
++ Song saving
 
 ## User Guide for `Windows`
 1. Download the executable from the project releases, or build it yourself
