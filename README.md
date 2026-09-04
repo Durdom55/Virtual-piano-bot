@@ -41,6 +41,7 @@ string
 threading
 json
 re
+os
 ```
 
 ## Функции
