@@ -239,6 +239,9 @@ class App(CTk):
             if os.path.isfile(f'Saves/{current_text}') and current_text != config.current_song:
                 showwarning(title='Warning', message='This name is already used for another file')
                 self.allsongs.set(config.current_song)
+            elif current_text.strip() == '':
+                showwarning(title='Warning', message='Name cannot be empty')
+                self.allsongs.set(config.current_song)
             else:
                 os.rename(f'Saves/{config.current_song}', f'Saves/{current_text}')
                 i = config.songs.index(config.current_song)
